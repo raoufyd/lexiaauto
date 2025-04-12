@@ -1,28 +1,30 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Slider } from "@/components/ui/slider"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Slider } from "@/components/ui/slider";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface FilterSidebarProps {
-  brands: string[]
-  categories: string[]
-  fuelTypes: string[]
-  transmissions: string[]
-  minPrice: number
-  maxPrice: number
-  selectedBrand?: string
-  selectedCategory?: string
-  selectedFuel?: string
-  selectedTransmission?: string
-  priceRange: number[]
-  searchQuery?: string
-  sortOption?: string
+  brands: string[];
+  categories: string[];
+  fuelTypes: string[];
+  transmissions: string[];
+  conditions: string[];
+  minPrice: number;
+  maxPrice: number;
+  selectedBrand?: string;
+  selectedCategory?: string;
+  selectedFuel?: string;
+  selectedTransmission?: string;
+  priceRange: number[];
+  selectedCondition?: string;
+  searchQuery?: string;
+  sortOption?: string;
 }
 
 export default function FilterSidebar({
@@ -30,91 +32,124 @@ export default function FilterSidebar({
   categories,
   fuelTypes,
   transmissions,
+  conditions,
   minPrice,
   maxPrice,
   selectedBrand = "",
   selectedCategory = "",
   selectedFuel = "",
   selectedTransmission = "",
+  selectedCondition = "",
   priceRange = [0, 100000],
   searchQuery = "",
   sortOption = "default",
 }: FilterSidebarProps) {
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const [brand, setBrand] = useState<string>(selectedBrand)
-  const [category, setCategory] = useState<string>(selectedCategory)
-  const [fuel, setFuel] = useState<string>(selectedFuel)
-  const [transmission, setTransmission] = useState<string>(selectedTransmission)
-  const [price, setPrice] = useState<number[]>(priceRange)
-  const [query, setQuery] = useState<string>(searchQuery)
-  const [sort, setSort] = useState<string>(sortOption)
-
+  const [brand, setBrand] = useState<string>(selectedBrand);
+  const [category, setCategory] = useState<string>(selectedCategory);
+  const [fuel, setFuel] = useState<string>(selectedFuel);
+  const [transmission, setTransmission] =
+    useState<string>(selectedTransmission);
+  const [price, setPrice] = useState<number[]>(priceRange);
+  const [query, setQuery] = useState<string>(searchQuery);
+  const [sort, setSort] = useState<string>(sortOption);
+  const [condition, setCondition] = useState<string>(selectedCondition);
   // Update state when props change (e.g., when URL params change)
   useEffect(() => {
-    setBrand(selectedBrand)
-    setCategory(selectedCategory)
-    setFuel(selectedFuel)
-    setTransmission(selectedTransmission)
-    setPrice(priceRange)
-    setQuery(searchQuery)
-    setSort(sortOption)
-  }, [selectedBrand, selectedCategory, selectedFuel, selectedTransmission, priceRange, searchQuery, sortOption])
+    setBrand(selectedBrand);
+    setCategory(selectedCategory);
+    setCondition(selectedCondition);
+    setFuel(selectedFuel);
+    setTransmission(selectedTransmission);
+    setPrice(priceRange);
+    setQuery(searchQuery);
+    setSort(sortOption);
+  }, [
+    selectedBrand,
+    selectedCategory,
+    selectedFuel,
+    selectedTransmission,
+    selectedCondition,
+    priceRange,
+    searchQuery,
+    sortOption,
+  ]);
 
   const applyFilters = () => {
-    const params = new URLSearchParams(searchParams.toString())
+    const params = new URLSearchParams(searchParams.toString());
 
     // Update or remove parameters based on filter values
-    if (brand) params.set("brand", brand)
-    else params.delete("brand")
+    if (brand) params.set("brand", brand);
+    else params.delete("brand");
 
-    if (category) params.set("category", category)
-    else params.delete("category")
+    if (category) params.set("category", category);
+    else params.delete("category");
 
-    if (fuel) params.set("fuel", fuel)
-    else params.delete("fuel")
+    if (fuel) params.set("fuel", fuel);
+    else params.delete("fuel");
 
-    if (transmission) params.set("transmission", transmission)
-    else params.delete("transmission")
+    if (transmission) params.set("transmission", transmission);
+    else params.delete("transmission");
 
-    if (price[0] !== minPrice) params.set("minPrice", price[0].toString())
-    else params.delete("minPrice")
+    if (price[0] !== minPrice) params.set("minPrice", price[0].toString());
+    else params.delete("minPrice");
 
-    if (price[1] !== maxPrice) params.set("maxPrice", price[1].toString())
-    else params.delete("maxPrice")
+    if (price[1] !== maxPrice) params.set("maxPrice", price[1].toString());
+    else params.delete("maxPrice");
 
-    if (query) params.set("query", query)
-    else params.delete("query")
+    if (query) params.set("query", query);
+    else params.delete("query");
 
-    if (sort !== "default") params.set("sort", sort)
-    else params.delete("sort")
+    if (sort !== "default") params.set("sort", sort);
+    else params.delete("sort");
+    if (condition) params.set("condition", condition);
+    else params.delete("condition");
 
     // Navigate to the new URL with filters
-    router.push(`/vehicles?${params.toString()}`)
-  }
+    router.push(`/vehicles?${params.toString()}`);
+  };
 
   const resetFilters = () => {
-    setBrand("")
-    setCategory("")
-    setFuel("")
-    setTransmission("")
-    setPrice([minPrice, maxPrice])
-    setQuery("")
-    setSort("default")
-    router.push("/vehicles")
-  }
+    setBrand("");
+    setCategory("");
+    setFuel("");
+    setTransmission("");
+    setCondition("");
+    setPrice([minPrice, maxPrice]);
+    setQuery("");
+    setSort("default");
+    router.push("/vehicles");
+  };
 
   const handleBrandChange = (brandName: string) => {
-    setBrand(brand === brandName ? "" : brandName)
-  }
+    setBrand(brand === brandName ? "" : brandName);
+  };
 
   const handleCategoryChange = (categoryName: string) => {
-    setCategory(category === categoryName ? "" : categoryName)
-  }
+    setCategory(category === categoryName ? "" : categoryName);
+  };
 
   return (
     <div className="w-full lg:w-1/4 bg-white p-6 rounded-lg shadow-md h-fit">
+      <div className="mb-6">
+        <h3 className="font-bold uppercase text-sm mb-4">Condition</h3>
+        <div className="space-y-2">
+          {conditions.map((t) => (
+            <div key={t} className="flex items-center">
+              <Checkbox
+                id={`condition-${t}`}
+                checked={condition === t}
+                onCheckedChange={() => setCondition(condition === t ? "" : t)}
+              />
+              <Label htmlFor={`condition-${t}`} className="ml-2">
+                {t}
+              </Label>
+            </div>
+          ))}
+        </div>
+      </div>
       <div className="mb-6">
         <h3 className="font-bold uppercase text-sm mb-4">Catégorie</h3>
         <div className="space-y-2">
@@ -138,7 +173,11 @@ export default function FilterSidebar({
         <div className="grid grid-cols-2 gap-2">
           {brands.map((b) => (
             <div key={b} className="flex items-center">
-              <Checkbox id={`brand-${b}`} checked={brand === b} onCheckedChange={() => handleBrandChange(b)} />
+              <Checkbox
+                id={`brand-${b}`}
+                checked={brand === b}
+                onCheckedChange={() => handleBrandChange(b)}
+              />
               <Label htmlFor={`brand-${b}`} className="ml-2">
                 {b}
               </Label>
@@ -150,19 +189,29 @@ export default function FilterSidebar({
       <div className="mb-6">
         <h3 className="font-bold uppercase text-sm mb-4">Prix</h3>
         <div className="space-y-4">
-          <Slider value={price} min={minPrice} max={maxPrice} step={1000} onValueChange={setPrice} />
+          <Slider
+            value={price}
+            min={minPrice}
+            max={maxPrice}
+            step={1000}
+            onValueChange={setPrice}
+          />
           <div className="flex justify-between items-center">
             <Input
               type="number"
               value={price[0]}
-              onChange={(e) => setPrice([Number.parseInt(e.target.value), price[1]])}
+              onChange={(e) =>
+                setPrice([Number.parseInt(e.target.value), price[1]])
+              }
               className="w-24 text-sm"
             />
             <span className="text-sm">à</span>
             <Input
               type="number"
               value={price[1]}
-              onChange={(e) => setPrice([price[0], Number.parseInt(e.target.value)])}
+              onChange={(e) =>
+                setPrice([price[0], Number.parseInt(e.target.value)])
+              }
               className="w-24 text-sm"
             />
             <span className="text-sm">€</span>
@@ -194,7 +243,9 @@ export default function FilterSidebar({
               <Checkbox
                 id={`transmission-${t}`}
                 checked={transmission === t}
-                onCheckedChange={() => setTransmission(transmission === t ? "" : t)}
+                onCheckedChange={() =>
+                  setTransmission(transmission === t ? "" : t)
+                }
               />
               <Label htmlFor={`transmission-${t}`} className="ml-2">
                 {t}
@@ -231,7 +282,10 @@ export default function FilterSidebar({
       </div>
 
       <div className="space-y-2">
-        <Button className="w-full bg-red-600 hover:bg-red-700" onClick={applyFilters}>
+        <Button
+          className="w-full bg-red-600 hover:bg-red-700"
+          onClick={applyFilters}
+        >
           Appliquer les filtres
         </Button>
         <Button className="w-full" variant="outline" onClick={resetFilters}>
@@ -239,5 +293,5 @@ export default function FilterSidebar({
         </Button>
       </div>
     </div>
-  )
+  );
 }
