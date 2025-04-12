@@ -1,41 +1,70 @@
-import { Input } from "@/components/ui/input"
-import Link from "next/link"
-import Image from "next/image"
-import { Phone, MessageSquare } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import CarCard from "@/components/car-card"
-import ServiceCard from "@/components/service-card"
-import { getCars } from "@/lib/actions"
-import SearchForm from "@/components/search-form"
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
+import Image from "next/image";
+import { Phone, MessageSquare } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import CarCard from "@/components/car-card";
+import ServiceCard from "@/components/service-card";
+import { getCars } from "@/lib/actions";
+import SearchForm from "@/components/search-form";
 
 export default async function Home() {
-  const allCars = await getCars()
-  const featuredCars = allCars.slice(0, 4)
+  const allCars = await getCars();
+  const featuredCars = allCars.slice(0, 4);
 
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
         {/* Hero Section */}
+        {/* Hero Section with Carousel */}
         <section className="relative">
           <div className="relative h-[500px] overflow-hidden">
-            <Image
-              src="/placeholder.svg?height=500&width=1200"
-              alt="Car Export"
-              width={1200}
-              height={500}
-              className="object-cover w-full"
-              priority
-            />
-            <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white p-4 text-center">
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">AUTO EXPORT</h1>
-              <p className="text-xl md:text-2xl mb-8">
-                Véhicules neufs et d&apos;occasions pour export vers l&apos;Afrique
-              </p>
-              <Link href="/vehicles">
-                <Button size="lg" className="bg-red-600 hover:bg-red-700">
-                  Découvrir nos Véhicules
-                </Button>
-              </Link>
+            <div className="carousel w-full h-full">
+              {[
+                "https://www.maif.fr/files/live/sites/maif-fr/files/images/particuliers/auto-moto/guides/sans-ct-a.jpg",
+                "/placeholder.svg?height=500&width=1200&text=Image+2",
+                "/placeholder.svg?height=500&width=1200&text=Image+3",
+              ].map((src, index) => (
+                <div
+                  key={index}
+                  id={`slide${index}`}
+                  className="carousel-item relative w-full h-full"
+                >
+                  <Image
+                    src={src || "/placeholder.svg"}
+                    alt={`Car Export Slide ${index + 1}`}
+                    width={1200}
+                    height={500}
+                    className="object-cover w-full"
+                    priority={index === 0}
+                  />
+                  <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white p-4 text-center">
+                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                      AUTO EXPORT
+                    </h1>
+                    <p className="text-xl md:text-2xl mb-8">
+                      Véhicules neufs et d&apos;occasions pour export vers
+                      l&apos;Afrique
+                    </p>
+                    <Link href="/vehicles">
+                      <Button size="lg" className="bg-red-600 hover:bg-red-700">
+                        Découvrir nos Véhicules
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* Carousel Indicators */}
+            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+              {[0, 1, 2].map((index) => (
+                <a
+                  key={index}
+                  href={`#slide${index}`}
+                  className="w-3 h-3 rounded-full bg-white/50 hover:bg-white/80 transition-colors"
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
             </div>
           </div>
         </section>
@@ -54,11 +83,15 @@ export default async function Home() {
         {/* Services Section */}
         <section className="py-12">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-2">Nos Services</h2>
+            <h2 className="text-3xl font-bold text-center mb-2">
+              Nos Services
+            </h2>
             <p className="text-center text-gray-600 mb-10 max-w-3xl mx-auto">
-              Notre équipe est une concession spécialisée dans l&apos;exportation de véhicules neufs vers l&apos;Afrique
-              et l&apos;Algérie plus particulièrement, toutes les marques. Notre mission est de vous procurer un
-              véhicule du meilleur prix, tout en proposant une livraison de qualité.
+              Notre équipe est une concession spécialisée dans
+              l&apos;exportation de véhicules neufs vers l&apos;Afrique et
+              l&apos;Algérie plus particulièrement, toutes les marques. Notre
+              mission est de vous procurer un véhicule du meilleur prix, tout en
+              proposant une livraison de qualité.
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -89,7 +122,9 @@ export default async function Home() {
         {/* Featured Cars Section */}
         <section className="py-12 bg-slate-100">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-10">Voitures Neuves</h2>
+            <h2 className="text-3xl font-bold text-center mb-10">
+              Voitures Neuves
+            </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {featuredCars.map((car) => (
@@ -99,7 +134,9 @@ export default async function Home() {
 
             <div className="flex justify-center mt-10">
               <Link href="/vehicles">
-                <Button className="bg-red-600 hover:bg-red-700">Voir Toutes Les Voitures</Button>
+                <Button className="bg-red-600 hover:bg-red-700">
+                  Voir Toutes Les Voitures
+                </Button>
               </Link>
             </div>
           </div>
@@ -108,14 +145,17 @@ export default async function Home() {
         {/* Testimonials Section */}
         <section className="py-12">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-10">Témoignages</h2>
+            <h2 className="text-3xl font-bold text-center mb-10">
+              Témoignages
+            </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <p className="text-gray-600 mb-4">
-                  "J'ai acheté une voiture pour mon père (exportation vers l'Algérie) chez AUTO EXPORT. L'équipe était
-                  disponible et toujours en contact pendant le processus. Merveilleux travail et très professionnel. Je
-                  les recommande."
+                  "J'ai acheté une voiture pour mon père (exportation vers
+                  l'Algérie) chez AUTO EXPORT. L'équipe était disponible et
+                  toujours en contact pendant le processus. Merveilleux travail
+                  et très professionnel. Je les recommande."
                 </p>
                 <div className="flex items-center">
                   <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
@@ -125,9 +165,11 @@ export default async function Home() {
 
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <p className="text-gray-600 mb-4">
-                  "Je viens d'acquérir un véhicule équipé de la climatisation que je souhaitais. Dès le premier contact
-                  que j'ai eu avec eux, j'ai eu l'impression de les connaître depuis longtemps. Accueil sympathique,
-                  livraison et accompagnement sans problème."
+                  "Je viens d'acquérir un véhicule équipé de la climatisation
+                  que je souhaitais. Dès le premier contact que j'ai eu avec
+                  eux, j'ai eu l'impression de les connaître depuis longtemps.
+                  Accueil sympathique, livraison et accompagnement sans
+                  problème."
                 </p>
                 <div className="flex items-center">
                   <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
@@ -137,8 +179,10 @@ export default async function Home() {
 
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <p className="text-gray-600 mb-4">
-                  "Service irréprochable ! C'est un plaisir de traiter avec cette société. Ils sont à l'écoute et font
-                  tout pour trouver LA voiture idéale pour vous. Bon courage et bonne continuation."
+                  "Service irréprochable ! C'est un plaisir de traiter avec
+                  cette société. Ils sont à l'écoute et font tout pour trouver
+                  LA voiture idéale pour vous. Bon courage et bonne
+                  continuation."
                 </p>
                 <div className="flex items-center">
                   <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
@@ -201,7 +245,10 @@ export default async function Home() {
                       placeholder="Commentaire ou message"
                     ></textarea>
                   </div>
-                  <Button type="submit" className="w-full bg-red-600 hover:bg-red-700">
+                  <Button
+                    type="submit"
+                    className="w-full bg-red-600 hover:bg-red-700"
+                  >
                     Envoyer
                   </Button>
                 </form>
@@ -211,5 +258,5 @@ export default async function Home() {
         </section>
       </main>
     </div>
-  )
+  );
 }
