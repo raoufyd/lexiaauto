@@ -7,10 +7,14 @@ import CarCard from "@/components/car-card";
 import ServiceCard from "@/components/service-card";
 import { getCars } from "@/lib/actions";
 import SearchForm from "@/components/search-form";
+import { useEffect } from "react";
 
 export default async function Home() {
   const allCars = await getCars();
-  const featuredCars = allCars.slice(0, 4);
+  const newfeaturedCars = allCars.filter((car) => car.condition === "new");
+  const moins3ansfeaturedCars = allCars.filter(
+    (car) => car.condition === "-3ans"
+  );
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -40,7 +44,7 @@ export default async function Home() {
                   />
                   <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white p-4 text-center">
                     <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                      AUTO EXPORT
+                      LEXIA AUTO EXPORT
                     </h1>
                     <p className="text-xl md:text-2xl mb-8">
                       Véhicules neufs et d&apos;occasions pour export vers
@@ -123,19 +127,39 @@ export default async function Home() {
         <section className="py-12 bg-slate-100">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-10">
-              Voitures Neuves
+              Véhicules de moins de 3 ans
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {featuredCars.map((car) => (
-                <CarCard key={car.id} car={car} />
+              {newfeaturedCars.slice(0, 4).map((car) => (
+                <CarCard key={car?.id} car={car} />
               ))}
             </div>
 
             <div className="flex justify-center mt-10">
-              <Link href="/vehicles">
+              <Link href="/vehicles?condition=new">
                 <Button className="bg-red-600 hover:bg-red-700">
-                  Voir Toutes Les Voitures
+                  Voir Tout Les Véhicules neufs
+                </Button>
+              </Link>
+            </div>
+          </div>
+
+          <div className="container m-4 mx-auto px-4">
+            <h2 className="text-3xl font-bold text-center mb-10">
+              Véhicules neufs
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {moins3ansfeaturedCars.slice(0, 4).map((car) => (
+                <CarCard key={car?.id} car={car} />
+              ))}
+            </div>
+
+            <div className="flex justify-center mt-10">
+              <Link href="/vehicles?condition=-3ans">
+                <Button className="bg-red-600 hover:bg-red-700">
+                  Voir Tout Les Véhicules de -3 ans
                 </Button>
               </Link>
             </div>
