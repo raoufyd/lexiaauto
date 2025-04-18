@@ -10,10 +10,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { getCarBrands, getCarCategories } from "@/lib/actions";
 import { createCar } from "@/lib/actions";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/lib/auth-context";
-import { Loader2, X, ImageIcon } from "lucide-react";
+import { Loader2, X, ImageIcon, Star, ArrowLeft, Plus } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { commonCarColors } from "@/lib/colors";
 
 export default function AddCarPage() {
   const [brands, setBrands] = useState<string[]>([]);
@@ -27,10 +28,21 @@ export default function AddCarPage() {
   const [newCategory, setNewCategory] = useState("");
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+  const [mainImageIndex, setMainImageIndex] = useState<number>(-1);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [availableColors, setAvailableColors] = useState<string[]>([]);
+  const [newColor, setNewColor] = useState("");
+  const [stock, setStock] = useState("disponible");
+  const colorInputRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
-  const { user } = useAuth();
+
+  // Options de stock
+  const stockOptions = [
+    { value: "disponible", label: "Disponible" },
+    { value: "non-disponible", label: "Non disponible" },
+    { value: "en-arrivage", label: "En arrivage" },
+  ];
 
   useEffect(() => {
     async function fetchData() {
@@ -57,20 +69,50 @@ export default function AddCarPage() {
     if (!files || files.length === 0) return;
 
     const newFiles = Array.from(files);
-    setSelectedFiles((prev) => [...prev, ...newFiles]);
+    const newFilesArray = [...selectedFiles, ...newFiles];
+    setSelectedFiles(newFilesArray);
 
     // Generate preview URLs
     const newPreviewUrls = newFiles.map((file) => URL.createObjectURL(file));
-    setPreviewUrls((prev) => [...prev, ...newPreviewUrls]);
+    const newPreviewUrlsArray = [...previewUrls, ...newPreviewUrls];
+    setPreviewUrls(newPreviewUrlsArray);
+
+    // Set the first image as main if no main image is selected yet
+    if (mainImageIndex === -1 && newPreviewUrlsArray.length > 0) {
+      setMainImageIndex(0);
+    }
   };
 
   // Remove a selected file
   const removeFile = (index: number) => {
-    setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
+    // Create new arrays without the removed file
+    const newSelectedFiles = [...selectedFiles];
+    const newPreviewUrls = [...previewUrls];
 
     // Revoke the object URL to avoid memory leaks
-    URL.revokeObjectURL(previewUrls[index]);
-    setPreviewUrls((prev) => prev.filter((_, i) => i !== index));
+    URL.revokeObjectURL(newPreviewUrls[index]);
+
+    // Remove the file and its preview
+    newSelectedFiles.splice(index, 1);
+    newPreviewUrls.splice(index, 1);
+
+    setSelectedFiles(newSelectedFiles);
+    setPreviewUrls(newPreviewUrls);
+
+    // Update main image index if needed
+    if (index === mainImageIndex) {
+      // If we're removing the main image, set the first remaining image as main
+      // or -1 if no images remain
+      setMainImageIndex(newSelectedFiles.length > 0 ? 0 : -1);
+    } else if (index < mainImageIndex) {
+      // If we're removing an image before the main image, decrement the main image index
+      setMainImageIndex(mainImageIndex - 1);
+    }
+  };
+
+  // Set an image as the main image
+  const setAsMainImage = (index: number) => {
+    setMainImageIndex(index);
   };
 
   // Handle brand selection
@@ -90,6 +132,40 @@ export default function AddCarPage() {
       setNewCategory("");
     }
   };
+  // Handle stock selection
+  const handleStockChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setStock(e.target.value);
+  };
+
+  // Fonction pour ajouter une nouvelle couleur
+  const addColor = () => {
+    if (newColor.trim() === "") return;
+
+    setAvailableColors((prev) => [...prev, newColor.trim()]);
+    setNewColor("");
+
+    // Focus sur le champ d'entrée après l'ajout
+    if (colorInputRef.current) {
+      colorInputRef.current.focus();
+    }
+  };
+
+  // Fonction pour supprimer une couleur
+  const removeColor = (index: number) => {
+    setAvailableColors((prev) => {
+      const newColors = [...prev];
+      newColors.splice(index, 1);
+      return newColors;
+    });
+  };
+
+  // Fonction pour gérer la touche Entrée dans le champ de couleur
+  const handleColorKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addColor();
+    }
+  };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -98,6 +174,7 @@ export default function AddCarPage() {
 
     try {
       const formData = new FormData(e.currentTarget);
+      console.log("formData", formData);
 
       // Handle brand selection
       if (selectedBrand === "new" && newBrand.trim()) {
@@ -108,16 +185,27 @@ export default function AddCarPage() {
       if (selectedCategory === "new" && newCategory.trim()) {
         formData.set("category", newCategory.trim());
       }
+      // Add stock status
+      formData.set("stock", stock);
 
+      // Add available colors
+      if (availableColors.length > 0) {
+        formData.set("available_colors", JSON.stringify(availableColors));
+      }
       // Add selected files to formData
       formData.delete("images");
-      selectedFiles.forEach((file) => {
+      selectedFiles.forEach((file, index) => {
         formData.append("images", file);
       });
 
-      const result = await createCar(formData);
+      // Add main image index to formData
+      if (mainImageIndex >= 0) {
+        formData.set("main_image_index", mainImageIndex.toString());
+      }
 
-      if (!result.success) {
+      const result = await createCar(formData);
+      console.log("result", result);
+      if (result.error) {
         setError(result.error);
         if (result.error === "Not authenticated") {
           // If not authenticated, redirect to login
@@ -125,9 +213,9 @@ export default function AddCarPage() {
         }
         return;
       }
-
+      console.log("result.car.id", result.car.id);
       // Success - redirect to admin page
-      router.push("/admin");
+      router.push(`/vehicles/${result.car.id}`);
     } catch (error: any) {
       console.error("Error creating car:", error);
       setError(error.message || "An error occurred while creating the car");
@@ -147,6 +235,16 @@ export default function AddCarPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <div className="flex justify-between items-center mb-6">
+        <Button
+          variant="outline"
+          onClick={() => router.back()}
+          className="flex items-center"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Retour
+        </Button>
+      </div>
       <h1 className="text-3xl font-bold mb-8">Ajouter un véhicule</h1>
 
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -320,6 +418,100 @@ export default function AddCarPage() {
                   <option value="Semi-automatique">Semi-automatique</option>
                 </select>
               </div>
+              <div>
+                <Label htmlFor="stock">Stock</Label>
+                <select
+                  id="stock"
+                  name="stock"
+                  className="w-full p-2 border rounded-md"
+                  value={stock}
+                  onChange={handleStockChange}
+                  required
+                >
+                  {stockOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="available_colors">Couleurs disponibles</Label>
+              <div className="mt-2 space-y-4">
+                <div className="flex flex-wrap gap-2">
+                  {availableColors.length > 0 ? (
+                    availableColors.map((color, index) => (
+                      <Badge
+                        key={index}
+                        className="px-3 py-1 flex items-center gap-1"
+                      >
+                        {color}
+                        <button
+                          type="button"
+                          onClick={() => removeColor(index)}
+                          className="ml-1 text-xs hover:text-red-500"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      </Badge>
+                    ))
+                  ) : (
+                    <p className="text-sm text-gray-500">
+                      Aucune couleur ajoutée
+                    </p>
+                  )}
+                </div>
+                {/* Liste de couleurs prédéfinies */}
+                <div className="mt-2">
+                  <p className="text-sm font-medium mb-2">
+                    Couleurs communes :
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {commonCarColors.map((color) => (
+                      <button
+                        key={color.value}
+                        type="button"
+                        onClick={() => {
+                          if (!availableColors.includes(color.value)) {
+                            setAvailableColors((prev) => [
+                              ...prev,
+                              color.value,
+                            ]);
+                          }
+                        }}
+                        className="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-md text-sm"
+                        disabled={availableColors.includes(color.value)}
+                      >
+                        {color.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Ajout de couleur personnalisée */}
+                <div className="flex gap-2 mt-4">
+                  <Input
+                    ref={colorInputRef}
+                    placeholder="Ajouter une couleur"
+                    value={newColor}
+                    onChange={(e) => setNewColor(e.target.value)}
+                    onKeyDown={handleColorKeyDown}
+                    className="flex-1"
+                  />
+                  <Button
+                    type="button"
+                    onClick={addColor}
+                    variant="outline"
+                    className="flex items-center gap-1"
+                    disabled={!newColor.trim()}
+                  >
+                    <Plus className="h-4 w-4" />
+                    Ajouter
+                  </Button>
+                </div>
+              </div>
             </div>
 
             <div>
@@ -334,7 +526,15 @@ export default function AddCarPage() {
             </div>
 
             <div>
-              <Label htmlFor="images">Images</Label>
+              <div className="flex justify-between items-center mb-2">
+                <Label htmlFor="images">Images</Label>
+                {previewUrls.length > 0 && (
+                  <p className="text-sm text-gray-500">
+                    Cliquez sur l&apos;étoile pour définir l&apos;image
+                    principale
+                  </p>
+                )}
+              </div>
               <div className="mt-2 flex flex-col gap-4">
                 {/* Image preview area */}
                 {previewUrls.length > 0 && (
@@ -342,20 +542,44 @@ export default function AddCarPage() {
                     {previewUrls.map((url, index) => (
                       <div
                         key={index}
-                        className="relative h-40 rounded-lg overflow-hidden border"
+                        className={`relative h-40 rounded-lg overflow-hidden border ${
+                          index === mainImageIndex
+                            ? "border-red-600 border-2"
+                            : "border-gray-200"
+                        }`}
                       >
                         <img
                           src={url || "/placeholder.svg"}
                           alt={`Preview ${index + 1}`}
                           className="w-full h-full object-cover"
                         />
-                        <button
-                          type="button"
-                          onClick={() => removeFile(index)}
-                          className="absolute top-2 right-2 bg-red-600 text-white rounded-full p-1 hover:bg-red-700"
-                        >
-                          <X className="h-4 w-4" />
-                        </button>
+                        <div className="absolute top-2 right-2 flex space-x-1">
+                          <button
+                            type="button"
+                            onClick={() => setAsMainImage(index)}
+                            className={`p-1 rounded-full ${
+                              index === mainImageIndex
+                                ? "bg-red-600 text-white"
+                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                            }`}
+                            title="Définir comme image principale"
+                          >
+                            <Star className="h-4 w-4" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => removeFile(index)}
+                            className="bg-red-600 text-white rounded-full p-1 hover:bg-red-700"
+                            title="Supprimer l'image"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                        {index === mainImageIndex && (
+                          <div className="absolute bottom-0 left-0 right-0 bg-red-600 text-white text-xs py-1 text-center">
+                            Image principale
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -364,7 +588,10 @@ export default function AddCarPage() {
                 {/* Upload area */}
                 <div
                   className="flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 cursor-pointer"
-                  onClick={() => fileInputRef.current?.click()}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    fileInputRef.current?.click();
+                  }}
                 >
                   <div className="text-center">
                     <ImageIcon className="mx-auto h-12 w-12 text-gray-300" />
@@ -372,6 +599,7 @@ export default function AddCarPage() {
                       <label
                         htmlFor="file-upload"
                         className="relative cursor-pointer rounded-md bg-white font-semibold text-red-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-red-600 focus-within:ring-offset-2 hover:text-red-500"
+                        onClick={(e) => e.stopPropagation()}
                       >
                         <span>Télécharger des fichiers</span>
                         <input

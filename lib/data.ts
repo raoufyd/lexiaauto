@@ -1,4 +1,4 @@
-import type { Car } from "./types"
+import type { Car } from "./types";
 
 export const featuredCars: Car[] = [
   {
@@ -9,7 +9,7 @@ export const featuredCars: Car[] = [
     year: "2024",
     price: "18 900",
     transmission: "Manuelle",
-    fuel: "Diesel",
+    fuel_type: "Diesel",
     stock: "DISPONIBLE IMMÉDIATEMENT",
     image: "/placeholder.svg?height=200&width=300&text=CITROËN JUMPY",
   },
@@ -21,7 +21,7 @@ export const featuredCars: Car[] = [
     year: "2024",
     price: "19 500",
     transmission: "Manuelle",
-    fuel: "Diesel",
+    fuel_type: "Diesel",
     stock: "DISPONIBLE IMMÉDIATEMENT",
     image: "/placeholder.svg?height=200&width=300&text=PEUGEOT RIFTER",
   },
@@ -33,7 +33,7 @@ export const featuredCars: Car[] = [
     year: "2024",
     price: "15 800",
     transmission: "Manuelle",
-    fuel: "Diesel",
+    fuel_type: "Diesel",
     stock: "DISPONIBLE IMMÉDIATEMENT",
     image: "/placeholder.svg?height=200&width=300&text=RENAULT KWID",
   },
@@ -49,7 +49,7 @@ export const featuredCars: Car[] = [
     stock: "DISPONIBLE IMMÉDIATEMENT",
     image: "/placeholder.svg?height=200&width=300&text=CITROËN BERLINGO",
   },
-]
+];
 
 export const allCars: Car[] = [
   ...featuredCars,
@@ -113,4 +113,4 @@ export const allCars: Car[] = [
     stock: "DISPONIBLE IMMÉDIATEMENT",
     image: "/placeholder.svg?height=200&width=300&text=AUDI A3",
   },
-]
+];

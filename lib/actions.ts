@@ -78,6 +78,10 @@ export async function createCar(formData: FormData) {
       transmission: formData.get("transmission") as string,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
+      stock_status: (formData.get("stock") as string) || "disponible",
+      available_colors: formData.get("available_colors")
+        ? JSON.parse(formData.get("available_colors") as string)
+        : [],
     };
 
     // Insert car data
@@ -166,6 +170,10 @@ export async function updateCar(id: string, formData: FormData) {
       fuel_type: formData.get("fuel_type") as string,
       transmission: formData.get("transmission") as string,
       updated_at: new Date().toISOString(),
+      stock_status: (formData.get("stock") as string) || "disponible",
+      available_colors: formData.get("available_colors")
+        ? JSON.parse(formData.get("available_colors") as string)
+        : [],
     };
 
     // Update car data
@@ -366,4 +374,71 @@ export async function getCarById(id: string) {
     images: images || [],
     stock: "DISPONIBLE IMMÉDIATEMENT",
   } as Car;
+}
+
+export async function deleteCarImage(imageId: string) {
+  try {
+    const supabase = await createServerSupabaseClient();
+
+    // Vérifier l'authentification
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session) {
+      return { success: false, error: "Not authenticated" };
+    }
+
+    // Récupérer l'image pour obtenir l'URL avant de la supprimer
+    const { data: image, error: fetchError } = await supabase
+      .from("car_images")
+      .select("*")
+      .eq("id", imageId)
+      .single();
+
+    if (fetchError) {
+      console.error("Error fetching image:", fetchError);
+      return { success: false, error: fetchError.message };
+    }
+
+    // Supprimer l'image de la base de données
+    const { error: deleteError } = await supabase
+      .from("car_images")
+      .delete()
+      .eq("id", imageId);
+
+    if (deleteError) {
+      console.error("Error deleting image:", deleteError);
+      return { success: false, error: deleteError.message };
+    }
+
+    // Si l'image existe dans le stockage, la supprimer également
+    if (image && image.url) {
+      // Extraire le chemin du fichier à partir de l'URL
+      const urlParts = image.url.split("/");
+      const bucketIndex = urlParts.findIndex((part) => part === "car-images");
+
+      if (bucketIndex !== -1 && bucketIndex < urlParts.length - 1) {
+        const path = urlParts.slice(bucketIndex + 1).join("/");
+
+        // Supprimer du stockage
+        const { error: storageError } = await supabase.storage
+          .from("car-images")
+          .remove([path]);
+
+        if (storageError) {
+          console.error("Error deleting image from storage:", storageError);
+          // On continue même si la suppression du stockage échoue
+        }
+      }
+    }
+
+    return { success: true, error: null };
+  } catch (error: any) {
+    console.error("Unexpected error during image deletion:", error);
+    return {
+      success: false,
+      error: error.message || "An unexpected error occurred",
+    };
+  }
 }

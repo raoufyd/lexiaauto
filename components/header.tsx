@@ -1,8 +1,8 @@
-import Link from "next/link"
-import Image from "next/image"
-import { Phone } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import MobileMenu from "@/components/mobile-menu"
+import Link from "next/link";
+import Image from "next/image";
+import { Phone } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import MobileMenu from "@/components/mobile-menu";
 
 export default function Header() {
   return (
@@ -25,25 +25,37 @@ export default function Header() {
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center">
             <Image
-              src="/placeholder.svg?height=50&width=150"
+              src="/logogpt-removebg-preview.png"
               alt="Auto Export Logo"
-              width={150}
-              height={50}
-              className="h-10 w-auto"
+              width={200}
+              height={200}
+              className="h-12 w-auto "
             />
           </Link>
 
           <div className="hidden md:flex items-center space-x-6">
-            <Link href="/" className="font-medium hover:text-red-600 transition-colors">
+            <Link
+              href="/"
+              className="font-medium hover:text-red-600 transition-colors"
+            >
               ACCUEIL
             </Link>
-            <Link href="/vehicles" className="font-medium hover:text-red-600 transition-colors">
+            <Link
+              href="/vehicles"
+              className="font-medium hover:text-red-600 transition-colors"
+            >
               VÉHICULES
             </Link>
-            <Link href="/services" className="font-medium hover:text-red-600 transition-colors">
+            <Link
+              href="/services"
+              className="font-medium hover:text-red-600 transition-colors"
+            >
               SERVICES
             </Link>
-            <Link href="/about" className="font-medium hover:text-red-600 transition-colors">
+            <Link
+              href="/about"
+              className="font-medium hover:text-red-600 transition-colors"
+            >
               À PROPOS DE NOUS
             </Link>
             <Link href="/contact">
@@ -57,5 +69,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }

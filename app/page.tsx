@@ -1,86 +1,109 @@
+"use client";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, MessageSquare } from "lucide-react";
+import { Phone, MessageSquare, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CarCard from "@/components/car-card";
 import ServiceCard from "@/components/service-card";
 import { getCars } from "@/lib/actions";
 import SearchForm from "@/components/search-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import HeroCarousel from "@/components/hero-carousel";
+import ServicesCarousel from "@/components/services-carousel";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Car } from "@/lib/types";
+import BrandCarousel from "@/components/brand-carousel";
+export default function Home() {
+  const isMobile = useIsMobile();
+  const [allCars, setAllCars] = useState<Car[]>([]);
+  const [loading, setLoading] = useState(true);
+  // Liste des marques de voitures
+  const carBrands = [
+    {
+      name: "Mercedes",
+      logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Mercedes-Benz_Star_2022.svg/1200px-Mercedes-Benz_Star_2022.svg.png",
+    },
+    {
+      name: "BMW",
+      logo: "https://www.bmw.com/etc.clientlibs/settings/wcm/designs/bmwcom/base/resources/ci2020/img/logo-bmw-com-gray.svg",
+    },
+    {
+      name: "Audi",
+      logo: "https://uploads.audi-mediacenter.com/system/production/media/116125/images/74022a65b478f7b3a8e0bf8ba70994f66fde5dd7/A231415_web_1440.jpg?1698528985",
+    },
+    {
+      name: "Peugeot",
+      logo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9d/Peugeot_2021_Logo.svg/1200px-Peugeot_2021_Logo.svg.png",
+    },
+    {
+      name: "Renault",
+      logo: "https://cdn.cookielaw.org/logos/1058e0b9-ee95-4d43-8292-3dae40ce5c3c/01937720-930b-77db-9c6d-5f2dfbccd09b/f1496116-d86b-48fd-aa1a-4c4691d73586/renault-logo-0-1.png",
+    },
+    {
+      name: "Citroën",
+      logo: "https://www.citroen.fr/content/dam/citroen/master/b2c/home/logo/logo858x558.PNG",
+    },
+    {
+      name: "Volkswagen",
+      logo: "https://uploads.vw-mms.de/system/production/images/vwn/030/145/images/7a0d84d3b718c9a621100e43e581278433114c82/DB2019AL01950_retina_2000.jpg?1649155356",
+    },
+    {
+      name: "Toyota",
+      logo: "https://brand.toyota.com/content/dam/brandhub/guidelines/logo/four-column/BHUB_Logo_LogoFamily_01.svg",
+    },
+    {
+      name: "Ford",
+      logo: "https://www.ford.fr/content/dam/guxeu/global-shared/header/ford_oval_blue_logo.svg",
+    },
+  ];
 
-export default async function Home() {
-  const allCars = await getCars();
-  const newfeaturedCars = allCars.filter((car) => car.condition === "new");
+  useEffect(() => {
+    async function fetchCars() {
+      try {
+        const cars = await getCars();
+        setAllCars(cars);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchCars();
+  }, []);
+
+  const newfeaturedCars = allCars.filter((car: Car) => car.condition === "new");
   const moins3ansfeaturedCars = allCars.filter(
-    (car) => car.condition === "-3ans"
+    (car: Car) => car.condition === "-3ans"
   );
 
+  if (loading)
+    return (
+      <div className="container mx-auto px-4 py-8 flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-red-600" />
+        <span className="ml-2">Chargement...</span>
+      </div>
+    );
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
         {/* Hero Section */}
         {/* Hero Section with Carousel */}
         <section className="relative">
-          <div className="relative h-[500px] overflow-hidden">
-            <div className="carousel w-full h-full">
-              {[
-                "https://www.maif.fr/files/live/sites/maif-fr/files/images/particuliers/auto-moto/guides/sans-ct-a.jpg",
-                "/placeholder.svg?height=500&width=1200&text=Image+2",
-                "/placeholder.svg?height=500&width=1200&text=Image+3",
-              ].map((src, index) => (
-                <div
-                  key={index}
-                  id={`slide${index}`}
-                  className="carousel-item relative w-full h-full"
-                >
-                  <Image
-                    src={src || "/placeholder.svg"}
-                    alt={`Car Export Slide ${index + 1}`}
-                    width={1200}
-                    height={500}
-                    className="object-cover w-full"
-                    priority={index === 0}
-                  />
-                  <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-white p-4 text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                      LEXIA AUTO EXPORT
-                    </h1>
-                    <p className="text-xl md:text-2xl mb-8">
-                      Véhicules neufs et d&apos;occasions pour export vers
-                      l&apos;Afrique
-                    </p>
-                    <Link href="/vehicles">
-                      <Button size="lg" className="bg-red-600 hover:bg-red-700">
-                        Découvrir nos Véhicules
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-            {/* Carousel Indicators */}
-            <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-              {[0, 1, 2].map((index) => (
-                <a
-                  key={index}
-                  href={`#slide${index}`}
-                  className="w-3 h-3 rounded-full bg-white/50 hover:bg-white/80 transition-colors"
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
-            </div>
-          </div>
+          <HeroCarousel />
         </section>
+        {/* Car Brands Logo Section */}
 
-        {/* Search Section */}
-        <section className="py-8 bg-slate-100">
+        <section className="py-12 bg-slate-100">
           <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
-              <div className="relative w-full md:w-1/2">
-                <SearchForm />
-              </div>
-            </div>
+            <h2 className="text-2xl font-bold text-center mb-8">
+              Nos Marques Disponibles
+            </h2>
+
+            <BrandCarousel brands={carBrands} />
+
+            <p className="text-center text-gray-600 mt-8 max-w-2xl mx-auto">
+              Spécialiste de l'exportation de véhicules neufs et d'occasion de
+              toutes marques vers l'Algérie et l'Afrique
+            </p>
           </div>
         </section>
 
@@ -98,28 +121,32 @@ export default async function Home() {
               proposant une livraison de qualité.
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              <ServiceCard
-                icon="car"
-                title="Achat d'une Voiture"
-                description="Nous proposons des véhicules neufs et d'occasions pour l'exportation."
-              />
-              <ServiceCard
-                icon="search"
-                title="Trouver Une Voiture"
-                description="Nous vous aidons à trouver le véhicule qui vous convient aux meilleurs prix."
-              />
-              <ServiceCard
-                icon="shield"
-                title="Achat Sécurisé"
-                description="Nous garantissons des moyens de paiement sécurisés et simples."
-              />
-              <ServiceCard
-                icon="ship"
-                title="Gestion De L'expédition"
-                description="Nous nous occupons de l'expédition de votre véhicule vers l'Algérie."
-              />
-            </div>
+            {isMobile ? (
+              <ServicesCarousel />
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <ServiceCard
+                  icon="car"
+                  title="Achat d'une Voiture"
+                  description="Nous proposons des véhicules neufs et d'occasions pour l'exportation."
+                />
+                <ServiceCard
+                  icon="search"
+                  title="Trouver Une Voiture"
+                  description="Nous vous aidons à trouver le véhicule qui vous convient aux meilleurs prix."
+                />
+                <ServiceCard
+                  icon="shield"
+                  title="Achat Sécurisé"
+                  description="Nous garantissons des moyens de paiement sécurisés et simples."
+                />
+                <ServiceCard
+                  icon="ship"
+                  title="Gestion De L'expédition"
+                  description="Nous nous occupons de l'expédition de votre véhicule vers l'Algérie."
+                />
+              </div>
+            )}
           </div>
         </section>
 
@@ -127,7 +154,7 @@ export default async function Home() {
         <section className="py-12 bg-slate-100">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-10">
-              Véhicules de moins de 3 ans
+              Véhicules Neufs
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -145,9 +172,9 @@ export default async function Home() {
             </div>
           </div>
 
-          <div className="container m-4 mx-auto px-4">
+          <div className="container m-4 mt-8 mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-10">
-              Véhicules neufs
+              Véhicules de moins - 3 ans
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
