@@ -146,6 +146,26 @@ export default function Home() {
         </section>
 
         {/* Featured Cars Section */}
+        <div className="container m-4 mt-8 mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-10">
+            Véhicules de moins - 3 ans
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {moins3ansfeaturedCars.slice(0, 4).map((car) => (
+              <CarCard key={car?.id} car={car} />
+            ))}
+          </div>
+
+          <div className="flex justify-center mt-10">
+            <Link href="/vehicles?condition=-3ans">
+              <Button className="bg-red-600 hover:bg-red-700">
+                Voir Tout Les Véhicules de -3 ans
+              </Button>
+            </Link>
+          </div>
+        </div>
+
         <section className="py-12 bg-slate-100">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-center mb-10">
@@ -162,26 +182,6 @@ export default function Home() {
               <Link href="/vehicles?condition=new">
                 <Button className="bg-red-600 hover:bg-red-700">
                   Voir Tout Les Véhicules neufs
-                </Button>
-              </Link>
-            </div>
-          </div>
-
-          <div className="container m-4 mt-8 mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-10">
-              Véhicules de moins - 3 ans
-            </h2>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {moins3ansfeaturedCars.slice(0, 4).map((car) => (
-                <CarCard key={car?.id} car={car} />
-              ))}
-            </div>
-
-            <div className="flex justify-center mt-10">
-              <Link href="/vehicles?condition=-3ans">
-                <Button className="bg-red-600 hover:bg-red-700">
-                  Voir Tout Les Véhicules de -3 ans
                 </Button>
               </Link>
             </div>
