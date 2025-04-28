@@ -8,8 +8,6 @@ interface CarCardProps {
 }
 
 export default function CarCard({ car }: CarCardProps) {
-  console.log("car", car);
-
   // Get the first image or use a placeholder
   const imageUrl =
     car.images && car.images.length > 0
@@ -76,7 +74,7 @@ export default function CarCard({ car }: CarCardProps) {
               {formattedPrice}€
             </span>
 
-            <span className="text-sm text-gray-500">Export Algérie</span>
+            <span className="text-sm text-gray-500">LEXIA AUTO EXPORT</span>
           </div>
         </div>
       </div>

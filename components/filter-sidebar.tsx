@@ -255,32 +255,6 @@ export default function FilterSidebar({
         </div>
       </div>
 
-      <div className="mb-6">
-        <h3 className="font-bold uppercase text-sm mb-4">Trier par</h3>
-        <RadioGroup value={sort} onValueChange={setSort}>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="default" id="sort-default" />
-            <Label htmlFor="sort-default">Par défaut</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="price-asc" id="sort-price-asc" />
-            <Label htmlFor="sort-price-asc">Prix: Croissant</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="price-desc" id="sort-price-desc" />
-            <Label htmlFor="sort-price-desc">Prix: Décroissant</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="date-desc" id="sort-date-desc" />
-            <Label htmlFor="sort-date-desc">Date: Plus récent</Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="date-asc" id="sort-date-asc" />
-            <Label htmlFor="sort-date-asc">Date: Plus ancien</Label>
-          </div>
-        </RadioGroup>
-      </div>
-
       <div className="space-y-2">
         <Button
           className="w-full bg-red-600 hover:bg-red-700"
