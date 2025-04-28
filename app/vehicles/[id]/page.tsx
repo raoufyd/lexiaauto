@@ -42,6 +42,9 @@ export default function CarDetailsPage({ params }: { params: { id: string } }) {
   function copy(): void {
     navigator.clipboard.writeText(car.phone_number);
     setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 3000);
   }
   useEffect(() => {
     async function fetchCar() {

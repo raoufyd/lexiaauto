@@ -123,23 +123,23 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <ServiceCard
                 icon="car"
-                title="Achat d'une Voiture"
-                description="Nous proposons des véhicules neufs et d'occasions pour l'exportation."
+                title="Acquisition d'un Véhicule"
+                description="Véhicules neufs et d'occasion disponibles pour l'exportation."
               />
               <ServiceCard
                 icon="search"
-                title="Trouver Une Voiture"
-                description="Nous vous aidons à trouver le véhicule qui vous convient aux meilleurs prix."
+                title="Trouver le Véhicule Idéal"
+                description="Nous vous aidons à choisir le véhicule qui vous correspond au meilleur prix."
               />
               <ServiceCard
                 icon="shield"
-                title="Achat Sécurisé"
-                description="Nous garantissons des moyens de paiement sécurisés et simples."
+                title="Accompagnement Administratif"
+                description="Nous vous assistons dans toutes les démarches administratives et la gestion de la paperasse."
               />
               <ServiceCard
                 icon="ship"
-                title="Gestion De L'expédition"
-                description="Nous nous occupons de l'expédition de votre véhicule vers l'Algérie."
+                title="Expédition Garantie"
+                description="Nous gérons l'exportation de votre véhicule vers l’Algérie en toute sécurité."
               />
             </div>
           </div>
