@@ -12,10 +12,9 @@ import Head from "next/head";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Auto Export - Véhicules pour export vers l'Algérie",
+  title: "LEXIA AUTO EXPORT - Véhicules pour export vers l'Algérie",
   description:
     "Spécialiste de l'export de véhicules neufs et d'occasion vers l'Algérie",
-  generator: "v0.dev",
 };
 
 export default function RootLayout({
