@@ -101,8 +101,8 @@ export default function Home() {
             <BrandCarousel brands={carBrands} />
 
             <p className="text-center text-gray-600 mt-8 max-w-2xl mx-auto">
-              Spécialiste de l'exportation de véhicules neufs et d'occasion de
-              toutes marques vers l'Algérie et l'Afrique
+              Votre partenaire pour l’export de véhicules neufs et d’occasion
+              vers l’Algérie et toute l’Afrique.
             </p>
           </div>
         </section>
@@ -114,39 +114,34 @@ export default function Home() {
               Nos Services
             </h2>
             <p className="text-center text-gray-600 mb-10 max-w-3xl mx-auto">
-              Notre équipe est une concession spécialisée dans
-              l&apos;exportation de véhicules neufs vers l&apos;Afrique et
-              l&apos;Algérie plus particulièrement, toutes les marques. Notre
-              mission est de vous procurer un véhicule du meilleur prix, tout en
-              proposant une livraison de qualité.
+              Nous sommes une concession spécialisée dans l’export de véhicules
+              neufs, toutes marques confondues, à destination de l’Afrique,
+              notamment l’Algérie. Notre engagement : vous offrir les meilleurs
+              tarifs avec une livraison soignée et de qualité..
             </p>
 
-            {isMobile ? (
-              <ServicesCarousel />
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <ServiceCard
-                  icon="car"
-                  title="Achat d'une Voiture"
-                  description="Nous proposons des véhicules neufs et d'occasions pour l'exportation."
-                />
-                <ServiceCard
-                  icon="search"
-                  title="Trouver Une Voiture"
-                  description="Nous vous aidons à trouver le véhicule qui vous convient aux meilleurs prix."
-                />
-                <ServiceCard
-                  icon="shield"
-                  title="Achat Sécurisé"
-                  description="Nous garantissons des moyens de paiement sécurisés et simples."
-                />
-                <ServiceCard
-                  icon="ship"
-                  title="Gestion De L'expédition"
-                  description="Nous nous occupons de l'expédition de votre véhicule vers l'Algérie."
-                />
-              </div>
-            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <ServiceCard
+                icon="car"
+                title="Achat d'une Voiture"
+                description="Nous proposons des véhicules neufs et d'occasions pour l'exportation."
+              />
+              <ServiceCard
+                icon="search"
+                title="Trouver Une Voiture"
+                description="Nous vous aidons à trouver le véhicule qui vous convient aux meilleurs prix."
+              />
+              <ServiceCard
+                icon="shield"
+                title="Achat Sécurisé"
+                description="Nous garantissons des moyens de paiement sécurisés et simples."
+              />
+              <ServiceCard
+                icon="ship"
+                title="Gestion De L'expédition"
+                description="Nous nous occupons de l'expédition de votre véhicule vers l'Algérie."
+              />
+            </div>
           </div>
         </section>
 
@@ -194,55 +189,6 @@ export default function Home() {
         </section>
 
         {/* Testimonials Section */}
-        <section className="py-12">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-10">
-              Témoignages
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <p className="text-gray-600 mb-4">
-                  "J'ai acheté une voiture pour mon père (exportation vers
-                  l'Algérie) chez AUTO EXPORT. L'équipe était disponible et
-                  toujours en contact pendant le processus. Merveilleux travail
-                  et très professionnel. Je les recommande."
-                </p>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
-                  <span className="font-medium">Ali Bensalem</span>
-                </div>
-              </div>
-
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <p className="text-gray-600 mb-4">
-                  "Je viens d'acquérir un véhicule équipé de la climatisation
-                  que je souhaitais. Dès le premier contact que j'ai eu avec
-                  eux, j'ai eu l'impression de les connaître depuis longtemps.
-                  Accueil sympathique, livraison et accompagnement sans
-                  problème."
-                </p>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
-                  <span className="font-medium">Mohamed Chabane</span>
-                </div>
-              </div>
-
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <p className="text-gray-600 mb-4">
-                  "Service irréprochable ! C'est un plaisir de traiter avec
-                  cette société. Ils sont à l'écoute et font tout pour trouver
-                  LA voiture idéale pour vous. Bon courage et bonne
-                  continuation."
-                </p>
-                <div className="flex items-center">
-                  <div className="w-10 h-10 bg-gray-300 rounded-full mr-3"></div>
-                  <span className="font-medium">Abdelhafid Yahiaoui</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Contact Section */}
         <section className="py-12 bg-slate-100">
@@ -251,32 +197,36 @@ export default function Home() {
               <div>
                 <h2 className="text-3xl font-bold mb-6">Retrouvez-nous</h2>
                 <p className="mb-4">Nous sommes disponibles du:</p>
-                <p className="mb-2">Lundi au vendredi entre 9h et 18h</p>
-                <p className="mb-2">Le samedi de 9h à 17h30</p>
-                <p className="mb-6">Fermés les jours fériés</p>
+                <p className="mb-2">Lundi au samedi entre 9h et 19h</p>
+                <p className="mb-6">Fermés le dimanche</p>
 
                 <div className="flex items-center mb-4">
                   <Phone className="h-5 w-5 mr-2 text-red-600" />
-                  <span className="font-bold">+33 6 65 64 72 03</span>
+                  <span className="font-bold">+33 7 55 18 23 66</span>
                 </div>
 
                 <div className="flex items-center mb-6">
                   <MessageSquare className="h-5 w-5 mr-2 text-red-600" />
-                  <span>autoexport@gmail.com</span>
+                  <span>lexiaauto6@gmail.com</span>
                 </div>
 
                 <div className="mb-6">
                   <p className="font-bold mb-2">UNIQUEMENT SUR RENDEZ-VOUS</p>
-                  <p>505 Avenue du Prado</p>
-                  <p>13008 Marseille, France</p>
+                  <p>30 Chemin de Casselevres</p>
+                  <p>31790 saint-Jory, France</p>
                 </div>
 
                 <div className="flex items-center">
-                  <Button className="bg-green-500 hover:bg-green-600 flex items-center">
+                  <Button
+                    className="bg-green-500 hover:bg-green-600 flex items-center"
+                    onClick={() =>
+                      window.open("https://wa.me/33755182366", "whatsapp")
+                    }
+                  >
                     <Image
-                      src="/placeholder.svg?height=24&width=24"
+                      src="public\WhatsApp.jpeg"
                       alt="WhatsApp"
-                      width={24}
+                      width={48}
                       height={24}
                       className="mr-2"
                     />

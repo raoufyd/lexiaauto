@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Phone } from "lucide-react";
+import { Facebook, Instagram, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MobileMenu from "@/components/mobile-menu";
 
@@ -12,7 +12,22 @@ export default function Header() {
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center text-sm">
             <Phone className="h-3 w-3 mr-1" />
-            <span>+33 6 65 64 72 03</span>
+            <span>+33 7 55 18 23 66</span>
+            <div className="flex space-x-4">
+              <Link
+                href="#"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <Facebook className="h-5 w-5" />
+              </Link>
+              <Link
+                href="#"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <Instagram className="h-5 w-5" />
+              </Link>
+              >
+            </div>
           </div>
           <Link href="/contact" className="text-sm hover:underline">
             Contactez-nous
