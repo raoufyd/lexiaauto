@@ -35,9 +35,14 @@ export default function CarDetailsPage({ params }: { params: { id: string } }) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [activeImage, setActiveImage] = useState<string | null>(null);
+  const [isCopied, setCopied] = useState<boolean>(false);
   const router = useRouter();
   const { user } = useAuth();
   const { id } = use(params);
+  function copy(): void {
+    navigator.clipboard.writeText(car.phone_number);
+    setCopied(true);
+  }
   useEffect(() => {
     async function fetchCar() {
       try {
@@ -211,10 +216,7 @@ export default function CarDetailsPage({ params }: { params: { id: string } }) {
                   <p className="text-sm text-gray-500">Année:</p>
                   <p className="font-medium">{car.year}</p>
                 </div>
-                <div>
-                  <p className="text-sm text-gray-500">Prix:</p>
-                  <p className="font-medium text-red-600">{formattedPrice}€</p>
-                </div>
+
                 <div>
                   <p className="text-sm text-gray-500">Condition:</p>
                   <p className="font-medium">
@@ -243,33 +245,14 @@ export default function CarDetailsPage({ params }: { params: { id: string } }) {
                   <p className="text-sm text-gray-500">Transmission:</p>
                   <p className="font-medium">{car.transmission}</p>
                 </div>
+
                 <div>
                   <p className="text-sm text-gray-500">Téléphone:</p>
                   <p className="font-medium">{car.phone_number}</p>
                 </div>
-                <div className="col-span-2 mt-4">
-                  <p className="text-sm text-gray-500">Date de création:</p>
-                  <p className="font-medium">
-                    {new Date(car.created_at).toLocaleDateString("fr-FR", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>
-                </div>
-                <div className="col-span-2 mt-4">
-                  <p className="text-sm text-gray-500">Dernière mise à jour:</p>
-                  <p className="font-medium">
-                    {new Date(car.updated_at).toLocaleDateString("fr-FR", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </p>
+                <div>
+                  <p className="text-sm text-gray-500">Prix:</p>
+                  <p className="text-xl font-bold">{formattedPrice}€</p>
                 </div>
               </div>
 
@@ -290,17 +273,19 @@ export default function CarDetailsPage({ params }: { params: { id: string } }) {
           <div className="flex items-center gap-4 mb-4">
             <div className="w-16 h-16 bg-gray-200 rounded-full"></div>
             <div>
-              <h4 className="font-bold">AUTO EXPORT MARSEILLE</h4>
+              <h4 className="font-bold">LEXIA AUTO EXPORT</h4>
               <p className="text-sm text-gray-500">Vendeur</p>
             </div>
           </div>
           <div className="mb-4">
             <p className="text-sm mb-1">UNIQUEMENT SUR RDV:</p>
-            <p className="text-sm">505 Avenue du Prado, 13008 Marseille</p>
+            <p className="text-sm">
+              30 Chemin de Casselevres, 31790 saint-Jory
+            </p>
           </div>
           <div>
             <p className="text-sm mb-1">Email:</p>
-            <p className="text-sm">autoexportmarseille@gmail.com</p>
+            <p className="text-sm">lexiaauto6@gmail.com</p>
           </div>
         </div>
         <div className="bg-white p-6 rounded-lg shadow-md mb-6">
@@ -334,22 +319,27 @@ export default function CarDetailsPage({ params }: { params: { id: string } }) {
                   : "OCCASION"}
               </Badge>
             </div>
-            <Button className="w-full mb-2">Ajouter aux favoris</Button>
           </div>
 
           <div className="border-t pt-4">
             <h3 className="font-bold mb-3">Contactez-nous</h3>
             <div className="space-y-3">
-              <Button className="w-full flex items-center justify-center gap-2">
+              <Button
+                className="w-full flex items-center justify-center gap-2"
+                onClick={() => copy()}
+                id="myInput"
+              >
                 <Phone className="h-4 w-4" />
-                {car.phone_number}
+                {isCopied ? "Numéro copié avec succès" : car.phone_number}
               </Button>
-              <Button className="w-full bg-green-500 hover:bg-green-600 flex items-center justify-center gap-2">
+              <Button
+                className="w-full bg-green-500 hover:bg-green-600 flex items-center justify-center gap-2"
+                onClick={() =>
+                  window.open("https://wa.me/33755182366", "whatsapp")
+                }
+              >
                 <MessageSquare className="h-4 w-4" />
                 Chat par WhatsApp
-              </Button>
-              <Button variant="outline" className="w-full">
-                Envoyer Message
               </Button>
             </div>
           </div>
