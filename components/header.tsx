@@ -1,33 +1,28 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Instagram, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import MobileMenu from "@/components/mobile-menu";
+import { useState } from "react";
 
 export default function Header() {
+  const [isCopied, setCopied] = useState(false);
+  function copy(): void {
+    navigator.clipboard.writeText("+33 7 55 18 23 66");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 3000);
+  }
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white">
       {/* Top bar */}
       <div className="bg-red-600 text-white py-1">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <div className="flex items-center text-sm">
+          <div className="flex items-center text-sm" onClick={() => copy()}>
             <Phone className="h-3 w-3 mr-1" />
-            <span>+33 7 55 18 23 66</span>
-            <div className="flex space-x-4">
-              <Link
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                <Facebook className="h-5 w-5" />
-              </Link>
-              <Link
-                href="#"
-                className="text-gray-400 hover:text-white transition-colors"
-              >
-                <Instagram className="h-5 w-5" />
-              </Link>
-              >
-            </div>
+            <span>
+              {isCopied ? "Numéro copié avec succès" : "+33 7 55 18 23 66"}
+            </span>
           </div>
           <Link href="/contact" className="text-sm hover:underline">
             Contactez-nous

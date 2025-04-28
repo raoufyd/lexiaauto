@@ -1,6 +1,6 @@
-import Link from "next/link"
-import Image from "next/image"
-import { Facebook, Instagram, Mail, Phone } from "lucide-react"
+import Link from "next/link";
+import Image from "next/image";
+import { Facebook, Instagram, Mail, Phone } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -8,24 +8,31 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <Link href="/" className="inline-block mb-4">
+            <Link href="/" className="flex items-center">
               <Image
-                src="/placeholder.svg?height=50&width=150"
+                src="/logogpt-removebg-preview.png"
                 alt="Auto Export Logo"
-                width={150}
-                height={50}
-                className="h-10 w-auto"
+                width={200}
+                height={200}
+                className="h-12 w-auto "
               />
             </Link>
             <p className="text-sm text-gray-400 mb-4">
-              Nous sommes spécialisés dans la vente des véhicules neufs & d&apos;occasion avec prise en charge de
-              l&apos;export Algérie.
+              Spécialistes de la vente de véhicules neufs et d’occasion, nous
+              assurons également la prise en charge complète de l’exportation
+              vers l’Algérie.
             </p>
             <div className="flex space-x-4">
-              <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+              <Link
+                href="#"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
                 <Facebook className="h-5 w-5" />
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+              <Link
+                href="#"
+                className="text-gray-400 hover:text-white transition-colors"
+              >
                 <Instagram className="h-5 w-5" />
               </Link>
             </div>
@@ -35,27 +42,42 @@ export default function Footer() {
             <h3 className="font-bold text-lg mb-4">SEGMENTS</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/buy" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/buy"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
                   Achat
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/contact"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
                   Contact
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/privacy"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
                   Politique de confidentialité
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/terms"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
                   Termes et conditions
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/services"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
                   Services
                 </Link>
               </li>
@@ -66,22 +88,34 @@ export default function Footer() {
             <h3 className="font-bold text-lg mb-4">USEFUL INFO</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/vehicles" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/vehicles"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
                   Véhicules neufs
                 </Link>
               </li>
               <li>
-                <Link href="/procedure" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/procedure"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
                   Procédure d&apos;achat
                 </Link>
               </li>
               <li>
-                <Link href="/cookies" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/cookies"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
                   Politique de cookies
                 </Link>
               </li>
               <li>
-                <Link href="/legal" className="text-gray-400 hover:text-white transition-colors">
+                <Link
+                  href="/legal"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
                   Mentions légales
                 </Link>
               </li>
@@ -105,9 +139,12 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-10 pt-6 text-center text-sm text-gray-400">
-          <p>&copy; {new Date().getFullYear()} | Auto Export. Tous droits réservés.</p>
+          <p>
+            &copy; {new Date().getFullYear()} | Auto Export. Tous droits
+            réservés.
+          </p>
         </div>
       </div>
     </footer>
-  )
+  );
 }

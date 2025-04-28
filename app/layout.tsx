@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/lib/auth-context";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" suppressHydrationWarning>
+      <link rel="icon" href="public\logogpt-removebg-preview.png" />
       <body className={inter.className} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
