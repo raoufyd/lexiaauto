@@ -137,7 +137,7 @@ export async function createCar(formData: FormData) {
   } catch (error: any) {
     console.error("Unexpected error creating car:", error);
     return {
-      error: error.message || "An unexpected error occurred",
+      error: error.message || "An unexpected image error occurred",
       car: null,
     };
   }
