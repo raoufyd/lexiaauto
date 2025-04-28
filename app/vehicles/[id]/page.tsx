@@ -159,7 +159,7 @@ export default function CarDetailsPage({ params }: { params: { id: string } }) {
             <div>
               {car.images && car.images.length > 0 ? (
                 <div>
-                  <div className="relative h-[50rem] rounded-lg overflow-hidden mb-4">
+                  <div className="relative h-[50rem] rounded-lg overflow-hidden mb-4 sm:h-[25rem]">
                     <Image
                       src={activeImage || car.images[0].url}
                       alt={car.name}
@@ -189,7 +189,7 @@ export default function CarDetailsPage({ params }: { params: { id: string } }) {
                   </div>
                 </div>
               ) : (
-                <div className="bg-gray-100 h-[400px] rounded-lg flex items-center justify-center">
+                <div className="bg-gray-100 h-[400px] rounded-lg flex items-center justify-center ">
                   <p className="text-gray-500">Aucune image disponible</p>
                 </div>
               )}
