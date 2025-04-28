@@ -159,7 +159,7 @@ export default function CarDetailsPage({ params }: { params: { id: string } }) {
             <div>
               {car.images && car.images.length > 0 ? (
                 <div>
-                  <div className="relative h-[400px] rounded-lg overflow-hidden mb-4">
+                  <div className="relative h-[50rem] rounded-lg overflow-hidden mb-4">
                     <Image
                       src={activeImage || car.images[0].url}
                       alt={car.name}
