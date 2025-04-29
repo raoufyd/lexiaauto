@@ -45,7 +45,7 @@ export default function CarCard({ car }: CarCardProps) {
           )}
           {car.stock_status === "en arrivage" && (
             <Badge className="absolute top-2 right-2 bg-orange-500">
-              en arrivage
+              En arrivage
             </Badge>
           )}
           {car.condition == "-3ans" ? (
