@@ -48,6 +48,13 @@ export default function CarCard({ car }: CarCardProps) {
               En attente
             </Badge>
           )}
+          {car.condition == "-3ans" ? (
+            <Badge className="absolute top-2 left-2 bg-orange-500">
+              {car.mileage} Km
+            </Badge>
+          ) : (
+            ""
+          )}
         </div>
         <div className="p-4">
           <h3 className="font-bold text-lg mb-1 line-clamp-1">{car.name}</h3>

@@ -41,7 +41,7 @@ export default function AddCarPage() {
   const stockOptions = [
     { value: "disponible", label: "Disponible" },
     { value: "non-disponible", label: "Non disponible" },
-    { value: "en-arrivage", label: "En arrivage" },
+    { value: "en arrivage", label: "En arrivage" },
   ];
 
   useEffect(() => {

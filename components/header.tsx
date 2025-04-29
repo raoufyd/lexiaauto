@@ -20,9 +20,20 @@ export default function Header() {
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex items-center text-sm" onClick={() => copy()}>
             <Phone className="h-3 w-3 mr-1" />
-            <span>
+            <span className="mr-5">
               {isCopied ? "Numéro copié avec succès" : "+33 7 55 18 23 66"}
             </span>
+            <a href="https://www.tiktok.com/@lexia.auto.export?_t=ZN-8vpzdviuzfK&_r=1">
+              <div className="bg-white rounded-xl w-6 h-6 flex justify-center">
+                <Image
+                  src={"/tiktok-1.svg"}
+                  alt={`Logo tiktok`}
+                  width={20}
+                  height={20}
+                  className="object-contain"
+                />
+              </div>
+            </a>
           </div>
           <Link href="/contact" className="text-sm hover:underline">
             Contactez-nous
