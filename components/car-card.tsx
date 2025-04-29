@@ -70,9 +70,7 @@ export default function CarCard({ car }: CarCardProps) {
           </div>
 
           <div className="flex justify-between items-center">
-            <span className="text-xl font-bold text-red-600">
-              {formattedPrice}€
-            </span>
+            <span className="text-xl font-bold ">{formattedPrice}€</span>
 
             <span className="text-sm text-gray-500">LEXIA AUTO EXPORT</span>
           </div>

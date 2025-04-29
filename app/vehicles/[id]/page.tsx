@@ -162,7 +162,7 @@ export default function CarDetailsPage({ params }: { params: { id: string } }) {
             <div>
               {car.images && car.images.length > 0 ? (
                 <div>
-                  <div className="relative h-[50rem] rounded-lg overflow-hidden mb-4 sm:h-[25rem]">
+                  <div className="relative h-[50rem] rounded-lg overflow-hidden mb-4 max-sm:h-[25rem]">
                     <Image
                       src={activeImage || car.images[0].url}
                       alt={car.name}
@@ -271,25 +271,33 @@ export default function CarDetailsPage({ params }: { params: { id: string } }) {
       </div>
       {/* Car Details */}
       <div className="m-6 grid gap-8 md:grid-cols-2 lg:grid-cols-2">
-        <div className="bg-white p-6 rounded-lg shadow-md max-h-96 ">
-          <h3 className="font-bold mb-4">Vendeur</h3>
+        <div className="bg-white p-6 rounded-lg shadow-md max-h-48 ">
           <div className="flex items-center gap-4 mb-4">
-            <div className="w-16 h-16 bg-gray-200 rounded-full"></div>
             <div>
-              <h4 className="font-bold">LEXIA AUTO EXPORT</h4>
-              <p className="text-sm text-gray-500">Vendeur</p>
+              <h4 className="font-bold">Document administratives :</h4>
             </div>
           </div>
-          <div className="mb-4">
-            <p className="text-sm mb-1">UNIQUEMENT SUR RDV:</p>
-            <p className="text-sm">
-              30 Chemin de Casselevres, 31790 saint-Jory
-            </p>
-          </div>
-          <div>
+          {car.condition == "new" ? (
+            <div className="mb-4">
+              <ul className={"list-disc list-inside"}>
+                <li>Passeport algérien </li>
+                <li>Carte consulaire CCR </li>
+                <li>Licence Moudjahid </li>
+                <li>Lettre de credit </li>
+              </ul>
+            </div>
+          ) : (
+            <div className="mb-4">
+              <ul className={"list-disc list-inside"}>
+                <li>Passeport algérien </li>
+                <li>Résidence </li>
+              </ul>
+            </div>
+          )}
+          {/* <div className="-mb-[-48] ">
             <p className="text-sm mb-1">Email:</p>
             <p className="text-sm">lexiaauto6@gmail.com</p>
-          </div>
+          </div> */}
         </div>
         <div className="bg-white p-6 rounded-lg shadow-md mb-6">
           <h1 className="text-2xl font-bold mb-2">{car.name}</h1>

@@ -56,6 +56,18 @@ export default function Home() {
       name: "Ford",
       logo: "https://www.ford.fr/content/dam/guxeu/global-shared/header/ford_oval_blue_logo.svg",
     },
+    {
+      name: "Seat",
+      logo: "https://www.seat.com/content/dam/public/seat-website/global-header/seat-logo/seat-s-logo.svg",
+    },
+    {
+      name: "Skoda",
+      logo: "https://cdn.skoda-auto.com/images/sites/frfr-v2/bd7d5a90-eb25-4cba-9bde-300f314d3b9c/68fea08e8deea300aedb12ddb00e002d/HighlightsModule/685106d543825796f9f55d44fec7a4b2/dc644d7dcc87568712479736f3d9616116a47d60f725f03bd4a66359b5358ab7/Default_bp1200_1.webp",
+    },
+    {
+      name: "Fiat",
+      logo: "https://logo-marque.com/wp-content/uploads/2021/04/Fiat-Logo.png",
+    },
   ];
 
   useEffect(() => {
