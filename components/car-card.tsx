@@ -43,7 +43,7 @@ export default function CarCard({ car }: CarCardProps) {
               non-disponible
             </Badge>
           )}
-          {car.stock_status === "en_attente" && (
+          {car.stock_status === "en arrivage" && (
             <Badge className="absolute top-2 right-2 bg-orange-500">
               En attente
             </Badge>
