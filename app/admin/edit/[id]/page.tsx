@@ -69,7 +69,7 @@ export default function EditCarPage({ params }: { params: { id: string } }) {
   const stockOptions = [
     { value: "disponible", label: "Disponible" },
     { value: "non-disponible", label: "Non disponible" },
-    { value: "en-arrivage", label: "En arrivage" },
+    { value: "en arrivage", label: "En arrivage" },
   ];
 
   const router = useRouter();
