@@ -235,13 +235,7 @@ export default function Home() {
                       window.open("https://wa.me/33755182366", "whatsapp")
                     }
                   >
-                    <Image
-                      src="public\WhatsApp.jpeg"
-                      alt="WhatsApp"
-                      width={48}
-                      height={24}
-                      className="mr-2"
-                    />
+                    <MessageSquare className="h-4 w-4" />
                     DISCUTEZ AVEC SUR WHATSAPP
                   </Button>
                 </div>
