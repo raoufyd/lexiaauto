@@ -25,7 +25,7 @@ export default function CarCard({ car }: CarCardProps) {
   return (
     <Link href={`/vehicles/${car.id}`}>
       <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-        <div className="relative h-48">
+        <div className="relative h-64">
           <Image
             src={imageUrl || "/placeholder.svg"}
             alt={car.name}
