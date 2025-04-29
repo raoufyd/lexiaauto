@@ -49,7 +49,7 @@ export default function CarCard({ car }: CarCardProps) {
             </Badge>
           )}
           {car.condition == "-3ans" ? (
-            <Badge className="absolute top-2 left-2 bg-orange-500">
+            <Badge className="absolute top-2 left-2 bg-black">
               {car.mileage} Km
             </Badge>
           ) : (
