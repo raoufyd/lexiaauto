@@ -274,7 +274,7 @@ export default function CarDetailsPage({ params }: { params: { id: string } }) {
         <div className="bg-white p-6 rounded-lg shadow-md max-h-48 ">
           <div className="flex items-center gap-4 mb-4">
             <div>
-              <h4 className="font-bold">Document administratives :</h4>
+              <h4 className="font-bold">Documents administratifs :</h4>
             </div>
           </div>
           {car.condition == "new" ? (
@@ -308,9 +308,7 @@ export default function CarDetailsPage({ params }: { params: { id: string } }) {
           </div>
 
           <div className="mb-6">
-            <div className="text-3xl font-bold text-red-600 mb-1">
-              {formattedPrice}€
-            </div>
+            <div className="text-3xl font-bold  mb-1">{formattedPrice}€</div>
             <p className="text-sm text-gray-500">
               Tous nos prix sont Hors-Taxes.
             </p>
