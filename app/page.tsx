@@ -1,21 +1,16 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import Image from "next/image";
 import { Phone, MessageSquare, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CarCard from "@/components/car-card";
 import ServiceCard from "@/components/service-card";
 import { getCars } from "@/lib/actions";
-import SearchForm from "@/components/search-form";
 import { useEffect, useState } from "react";
 import HeroCarousel from "@/components/hero-carousel";
-import ServicesCarousel from "@/components/services-carousel";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { Car } from "@/lib/types";
 import BrandCarousel from "@/components/brand-carousel";
 export default function Home() {
-  const isMobile = useIsMobile();
   const [allCars, setAllCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
   // Liste des marques de voitures
@@ -214,7 +209,9 @@ export default function Home() {
 
                 <div className="flex items-center mb-4">
                   <Phone className="h-5 w-5 mr-2 text-red-600" />
-                  <span className="font-bold">+33 7 55 18 23 66</span>
+                  <span className="font-bold">
+                    {process.env.LEXIA_AUTO_NUMBER}
+                  </span>
                 </div>
 
                 <div className="flex items-center mb-6">
@@ -232,7 +229,7 @@ export default function Home() {
                   <Button
                     className="bg-green-500 hover:bg-green-600 flex items-center"
                     onClick={() =>
-                      window.open("https://wa.me/33755182366", "whatsapp")
+                      window.open("https://wa.me/33607357408", "whatsapp")
                     }
                   >
                     <MessageSquare className="h-4 w-4" />

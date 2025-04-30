@@ -9,7 +9,7 @@ import { useState } from "react";
 export default function Header() {
   const [isCopied, setCopied] = useState(false);
   function copy(): void {
-    navigator.clipboard.writeText("+33 7 55 18 23 66");
+    navigator.clipboard.writeText("+33 6 07 35 74 08");
     setCopied(true);
     setTimeout(() => setCopied(false), 3000);
   }
@@ -21,7 +21,7 @@ export default function Header() {
           <div className="flex items-center text-sm" onClick={() => copy()}>
             <Phone className="h-3 w-3 mr-1" />
             <span className="mr-5">
-              {isCopied ? "Numéro copié avec succès" : "+33 7 55 18 23 66"}
+              {isCopied ? "Numéro copié avec succès" : "+33 6 07 35 74 08"}
             </span>
             <a href="https://www.tiktok.com/@lexia.auto.export?_t=ZN-8vpzdviuzfK&_r=1">
               <div className="bg-white rounded-xl w-6 h-6 flex justify-center">

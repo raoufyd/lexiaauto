@@ -331,7 +331,7 @@ export default function AddCarPage() {
                 <Input
                   id="phone"
                   name="phone_number"
-                  placeholder="Ex: +33 6 65 64 72 03"
+                  placeholder="Ex: +33 6 07 35 74 08"
                   required
                 />
               </div>

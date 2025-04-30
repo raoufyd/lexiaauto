@@ -7,7 +7,6 @@ import { Suspense } from "react";
 import CarListingSkeleton from "@/components/car-listing-skeleton";
 import FilterSidebar from "@/components/filter-sidebar";
 import SortDropdown from "@/components/sort-dropdown";
-import { log } from "console";
 
 export default async function VehiclesPage({
   searchParams,

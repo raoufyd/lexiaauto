@@ -22,10 +22,6 @@ import {
 
 import { Phone, MessageSquare } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getCars } from "@/lib/actions";
-import CarCard from "@/components/car-card";
-import { notFound } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 
 export default function CarDetailsPage({ params }: { params: { id: string } }) {
@@ -344,7 +340,7 @@ export default function CarDetailsPage({ params }: { params: { id: string } }) {
               <Button
                 className="w-full bg-green-500 hover:bg-green-600 flex items-center justify-center gap-2"
                 onClick={() =>
-                  window.open("https://wa.me/33755182366", "whatsapp")
+                  window.open("https://wa.me/33607357408", "whatsapp")
                 }
               >
                 <MessageSquare className="h-4 w-4" />
