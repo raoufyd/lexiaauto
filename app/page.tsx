@@ -209,9 +209,7 @@ export default function Home() {
 
                 <div className="flex items-center mb-4">
                   <Phone className="h-5 w-5 mr-2 text-red-600" />
-                  <span className="font-bold">
-                    {process.env.LEXIA_AUTO_NUMBER}
-                  </span>
+                  <span className="font-bold">+33 6 07 35 74 08</span>
                 </div>
 
                 <div className="flex items-center mb-6">
