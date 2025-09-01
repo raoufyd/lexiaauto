@@ -442,3 +442,20 @@ export async function deleteCarImage(imageId: string) {
     };
   }
 }
+export async function addComment(formData: {
+  name: string;
+  email?: string;
+  phone?: string;
+  comment: string;
+}) {
+  const supabase = await createServerSupabaseClient();
+  const { name, email, phone, comment } = formData;
+
+  // . Insert new row
+  const { data, error } = await supabase
+    .from("comments")
+    .insert([{ name, email, phone: phone || 0, comment }]);
+
+  if (error) throw new Error(error.message);
+  return data;
+}

@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import HeroCarousel from "@/components/hero-carousel";
 import { Car } from "@/lib/types";
 import BrandCarousel from "@/components/brand-carousel";
+import CommentsSection from "@/components/comments-section";
+import CommentForm from "@/components/comment-form";
 export default function Home() {
   const [allCars, setAllCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
@@ -196,7 +198,7 @@ export default function Home() {
         </section>
 
         {/* Testimonials Section */}
-
+        <CommentsSection />
         {/* Contact Section */}
         <section className="py-12 bg-slate-100">
           <div className="container mx-auto px-4">
@@ -236,25 +238,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div>
-                <form className="bg-white p-6 rounded-lg shadow-md">
-                  <div className="grid grid-cols-1 gap-4 mb-4">
-                    <Input type="text" placeholder="Nom" />
-                    <Input type="email" placeholder="E-mail" />
-                    <Input type="tel" placeholder="Téléphone" />
-                    <textarea
-                      className="w-full p-3 border rounded-md min-h-[150px]"
-                      placeholder="Commentaire ou message"
-                    ></textarea>
-                  </div>
-                  <Button
-                    type="submit"
-                    className="w-full bg-red-600 hover:bg-red-700"
-                  >
-                    Envoyer
-                  </Button>
-                </form>
-              </div>
+              <CommentForm />
             </div>
           </div>
         </section>
