@@ -45,7 +45,7 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-bold">Adresse</h3>
                   <p className="text-gray-600">
-                    30 Chemin de Casselevres, 31790 saint-Jory, France
+                    Chemin de Casselevres, 31790 saint-Jory, France
                   </p>
                   <p className="text-sm text-red-600 font-medium">
                     UNIQUEMENT SUR RENDEZ-VOUS

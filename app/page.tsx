@@ -81,7 +81,7 @@ export default function Home() {
 
   const newfeaturedCars = allCars.filter((car: Car) => car.condition === "new");
   const moins3ansfeaturedCars = allCars.filter(
-    (car: Car) => car.condition === "-3ans"
+    (car: Car) => car.condition === "-3ans",
   );
 
   if (loading)
@@ -221,7 +221,7 @@ export default function Home() {
 
                 <div className="mb-6">
                   <p className="font-bold mb-2">UNIQUEMENT SUR RENDEZ-VOUS</p>
-                  <p>30 Chemin de Casselevres</p>
+                  <p>Chemin de Casselevres</p>
                   <p>31790 saint-Jory, France</p>
                 </div>
 
